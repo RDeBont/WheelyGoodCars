@@ -17,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/offers/store', [CarController::class, 'store'])->name('offercar.store');
 
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+    Route::get('/admin/dashboard/data', [AdminController::class, 'dashboardData'])->name('admin.dashboard.data');
 
 Route::get('/owncars', [CarController::class, 'owncars'])->name('owncars');
 Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
