@@ -10,7 +10,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Barryvdh\DomPDF\Facade\Pdf;
-
+use App\Models\Tag;
+use App\Models\Car_tag;
 
 class CarController extends Controller
 {
@@ -19,7 +20,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::all();
+        $cars = Car::with('tags')->get();
         return view('index', compact('cars'));
     }
 
@@ -37,7 +38,7 @@ class CarController extends Controller
      */
     public function create()
     {
-        //
+        return view('offers.offerStep1');
     }
 
     public function create_step1()
@@ -47,7 +48,13 @@ class CarController extends Controller
         $license_plate_api = strtoupper(str_replace('-', '', request('license_plate')));
         $license_plate = strtoupper(request('license_plate'));
 
-       
+       if (Car::where('license_plate', $license_plate)->exists()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'license_plate' => 'Er is al een aanbod met dit kenteken.'
+                ]);
+        }
 
 
         
@@ -57,9 +64,6 @@ class CarController extends Controller
         ])->get('https://opendata.rdw.nl/resource/m9d7-ebf2.json', [
             'kenteken' => $license_plate_api,
         ]);
-
-
-       
 
        if ($response->failed()) {
             return back()
@@ -79,16 +83,17 @@ class CarController extends Controller
                 ]);
         }
 
-   
         session(['car_api_data' => $data[0]]);
 
         return redirect()->route('offercar.step2', [
-            'license_plate' => $license_plate
+            'license_plate' => $license_plate,
         ]);
     }
 
     public function create_step2()
     {
+        $tags = Tag::all();
+
         $car_data = session('car_api_data');
         $license_plate = request('license_plate');
 
@@ -98,10 +103,32 @@ class CarController extends Controller
 
         return view('offers.offerStep2', [
             'license_plate' => $license_plate,
-            'car_data' => $car_data
+            'car_data' => $car_data,
+            'tags' => $tags,
         ]);
 
+        
 
+    }
+
+    public function create_step3()
+    {
+        
+        $tags = Tag::all();
+        $car_data = session('car_api_data');
+        $license_plate = request('license_plate');
+        $car_id = request('car_id');
+
+        if (!$car_data) {
+            return redirect()->route('offers.offerStep1');
+        }
+
+        return view('offers.offerStep3', [
+            'tags' => $tags,
+
+            'license_plate' => $license_plate,
+            'car_id' => $car_id,
+        ]);
     }
 
     /**
@@ -114,6 +141,8 @@ class CarController extends Controller
             'license_plate' => 'required|string',
             'kilometers' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
+            'tags' => 'array',
+            'tags.*' => 'exists:tags,id',
         ],[
             'license_plate.required' => 'Kenteken is verplicht.',
             'kilometers.required' => 'Kilometers zijn verplicht.',
@@ -122,6 +151,8 @@ class CarController extends Controller
             'price.required' => 'Prijs is verplicht.',
             'price.numeric' => 'Prijs moet een getal zijn.',
             'price.min' => 'Prijs moet minimaal 0 zijn.',
+            'tags.array' => 'Tags moeten een array zijn.',
+            'tags.*.exists' => 'Geselecteerde tag bestaat niet.',
         ]);
 
         $car_data = session('car_api_data');
@@ -143,6 +174,16 @@ class CarController extends Controller
             'weight' => $car_data['massa_rijklaar'] ?? null,
             'color' => $car_data['eerste_kleur'] ?? null,
         ]);
+
+        $car_tag = Car_tag::insert(
+            collect($validated['tags'] ?? [])->map(function ($tag_id) use ($car) {
+                return [
+                    'car_id' => $car->id,
+                    'tag_id' => $tag_id,
+                ];
+            })->toArray()
+        );
+
 
         session()->forget('car_api_data');
 
@@ -195,10 +236,14 @@ class CarController extends Controller
      */
     public function exportPdf(Car $car)
     {
+
         if ($car->user_id !== auth()->id()) {
             abort(403);
         }
-        $pdf = Pdf::loadView('own.car_pdf', compact('car'));
+        $pdf = Pdf::loadView('own.car_pdf', [
+            'car' => $car,
+            'user' => $car->user,
+        ]);
         return $pdf->download('auto-' . $car->license_plate . '.pdf');
     }
 }

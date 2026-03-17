@@ -18,6 +18,12 @@
                     <h2>{{ $car->make }} {{ $car->model }}</h2>
                     <p><strong>Kilometerstand:</strong> {{ number_format($car->mileage) }} km</p>
                     <p><strong>Prijs:</strong> €{{ number_format($car->price, 2, ',', '.') }}</p>
+                    <div class="car-tags">
+                        <p><strong>Tags:</strong></p>
+                        @foreach($car->tags as $tag)
+                            <span class="tag" style="background-color: {{ $tag->color }}; color: white;">{{ $tag->name }}</span>
+                        @endforeach
+                    </div>
                 </div>
             @endforeach
         </div>

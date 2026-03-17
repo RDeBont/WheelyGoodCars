@@ -9,9 +9,9 @@
 </head>
 
 <body>
-    <header>
+
         @include('layouts.header')
-    </header>
+        
     @include('components.alert')
 
 

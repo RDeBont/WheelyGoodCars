@@ -39,6 +39,6 @@ class Car extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'car_tag');
+        return $this->belongsToMany(Tag::class, 'car_tags');
     }
 }

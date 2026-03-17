@@ -7,6 +7,8 @@
                 style="border:none; outline:none; padding:0 15px;" />
 
             <button class="right" type="submit">Go!</button>
+
+
         </form>
     </div>
 </x-base-layout>

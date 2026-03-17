@@ -7,13 +7,16 @@
             <h1>Nieuw aanbod</h1>
             @csrf
 
-            <div class="form-group full-width">
-                <div class="license-plate-display">
+            <div class="form-group">
+                <div class="car-plate">
                     <div class="left">NL</div>
-                    <input type="text" id="license_plate" name="license_plate" value="{{ strtoupper($license_plate) }}" disabled>
+                    <span class="number">{{ $license_plate }}</span>
+
                 </div>
                 <input type="hidden" name="license_plate" value="{{ strtoupper($license_plate) }}">
+
             </div>
+
 
             <div class="form-group full-width">
                 <label for="brand">Merk</label>
@@ -69,7 +72,18 @@
                     <input type="number" id="price" name="price" placeholder="Voer verkoopprijs in" required>
                 </div>
             </div>
-
+            <div class="form-group full-width">
+                <label>Tags (optioneel)</label>
+                <div class="tags-container">
+                    @foreach($tags as $tag)
+                        <label class="tag-checkbox" style="background-color: {{ $tag->color }}; color: white;">
+                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}">
+                            {{ $tag->name }}
+                        </label>
+                    @endforeach
+                </div>
+            </div>
+        
             <button type="submit" class="btn-submit">Aanbod afzenden</button>
         </form>
     </div>
