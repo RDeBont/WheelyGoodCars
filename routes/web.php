@@ -26,6 +26,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/owncars', [CarController::class, 'owncars'])->name('owncars');
 Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
 Route::get('/cars/{car}/pdf', [CarController::class, 'exportPdf'])->middleware('auth')->name('cars.pdf');
+Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.show');
 
 Route::get('/dashboard', function () {
     return redirect()->route('index'); 

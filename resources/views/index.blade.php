@@ -4,7 +4,7 @@
 
         <div class="cars-row">
             @foreach($cars as $car)
-                <div class="car-card">
+                <a href="{{ route('cars.show', $car->id) }}" class="car-card card-link">
                     <div class="car-image">
                         <img src="{{ $car->image ? asset('storage/' . $car->image) : asset('images/default-car.png') }}" alt="{{ $car->make }} {{ $car->model }}">
                     </div>
@@ -24,7 +24,7 @@
                             <span class="tag" style="background-color: {{ $tag->color }}; color: white;">{{ $tag->name }}</span>
                         @endforeach
                     </div>
-                </div>
+                </a>
             @endforeach
         </div>
 

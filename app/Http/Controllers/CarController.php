@@ -147,6 +147,7 @@ class CarController extends Controller
             'license_plate' => 'required|string',
             'kilometers' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
+            'img' => 'nullable|image|max:2048',
         ],[
             'license_plate.required' => 'Kenteken is verplicht.',
             'kilometers.required' => 'Kilometers zijn verplicht.',
@@ -155,9 +156,14 @@ class CarController extends Controller
             'price.required' => 'Prijs is verplicht.',
             'price.numeric' => 'Prijs moet een getal zijn.',
             'price.min' => 'Prijs moet minimaal 0 zijn.',
+            'img.image' => 'Het bestand moet een afbeelding zijn.',
+            'img.max' => 'De afbeelding mag niet groter zijn dan 2MB.',
+
         ]);
 
         $car_data = session('car_api_data');
+
+        
 
         if (!$car_data) {
             return back()->withErrors(['error' => 'Sessiegegevens verloren gegaan.']);
@@ -175,6 +181,7 @@ class CarController extends Controller
             'production_year' => $car_data['datum_eerste_toelating'] ? substr($car_data['datum_eerste_toelating'], 0, 4) : null,
             'weight' => $car_data['massa_rijklaar'] ?? null,
             'color' => $car_data['eerste_kleur'] ?? null,
+            'image' => $validated['img'] ?? null,
         ]);
 
         session()->forget('car_api_data');
@@ -216,7 +223,12 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        //
+        try {
+            $car->increment('views');
+        } catch (\Exception $e) {
+        }
+
+        return view('cars.show', compact('car'));
     }
 
     /**

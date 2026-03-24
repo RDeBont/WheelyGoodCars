@@ -27,7 +27,6 @@ return new class extends Migration {
             $table->string('color')->nullable();
             $table->text('image')->nullable();
             $table->timestamp('sold_at')->nullable();
-
             $table->integer('views')->default(0);
             $table->timestamps();
         });

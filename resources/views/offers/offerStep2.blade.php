@@ -72,6 +72,12 @@
                     <input type="number" id="price" name="price" placeholder="Voer verkoopprijs in" required>
                 </div>
             </div>
+
+            <div class="form-group full-width">
+                <label for="img">Foto van de auto (optioneel)</label>
+                <input type="file" id="img" name="img" accept="image/*">
+                <p class="form-text">Maximale grootte: 4MB. JPG, PNG of WEBP</p>
+            </div>
         
             <button type="submit" class="btn-submit">Tags toevoegen</button>
         </form>
