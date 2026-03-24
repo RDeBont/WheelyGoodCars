@@ -14,7 +14,7 @@
                         <div class="car-list-image">
                             <a href="{{ route('cars.show', $car->id) }}">
                                 @if($car->image)
-                                    <img src="{{ asset('storage/' . $car->image) }}" alt="{{ $car->make }} {{ $car->model }}">
+                                    <img src="{{ asset($car->image) }}" alt="{{ $car->make }} {{ $car->model }}">
                                 @else
                                     <div class="car-list-image-placeholder">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="none"

@@ -11,7 +11,7 @@
         <div class="car-detail-left">
 
             @if($car->image)
-                <img src="{{ asset('storage/' . $car->image) }}"
+                <img src="{{ asset($car->image) }}"
                      alt="{{ $car->make }} {{ $car->model }}"
                      class="car-detail-img">
             @else

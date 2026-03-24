@@ -161,8 +161,29 @@ class CarController extends Controller
 
         ]);
 
-        $car_data = session('car_api_data');
+        $img = null;
+        $imageFile = $request->file('img');
+        if ($imageFile && !$imageFile->isValid()) {
+            return back()
+                ->withInput()
+                ->withErrors([
+                    'image' => 'Upload mislukt. Controleer bestandstype en grootte.'
+                ]);
+        }
+        if ($imageFile && $imageFile->isValid()) {
+            $targetDir = public_path('img/cars');
+            if (!is_dir($targetDir)) {
+                mkdir($targetDir, 0755, true);
+            }
 
+            $extension = $imageFile->getClientOriginalExtension();
+            $filename = uniqid('car_', true) . '.' . $extension;
+            $imageFile->move($targetDir, $filename);
+            $img = '/img/cars/' . $filename;
+        }
+
+        $car_data = session('car_api_data');
+        
         
 
         if (!$car_data) {
@@ -181,7 +202,7 @@ class CarController extends Controller
             'production_year' => $car_data['datum_eerste_toelating'] ? substr($car_data['datum_eerste_toelating'], 0, 4) : null,
             'weight' => $car_data['massa_rijklaar'] ?? null,
             'color' => $car_data['eerste_kleur'] ?? null,
-            'image' => $validated['img'] ?? null,
+            'image' => $img,
         ]);
 
         session()->forget('car_api_data');

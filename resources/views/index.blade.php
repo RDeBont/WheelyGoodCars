@@ -6,7 +6,7 @@
             @foreach($cars as $car)
                 <a href="{{ route('cars.show', $car->id) }}" class="car-card card-link">
                     <div class="car-image">
-                        <img src="{{ $car->image ? asset('storage/' . $car->image) : asset('images/default-car.png') }}" alt="{{ $car->make }} {{ $car->model }}">
+                        <img src="{{ asset($car->image) ?? asset('images/default-car.png') }}" alt="{{ $car->make }} {{ $car->model }}">
                     </div>
                     <div class="car-buy">
                         <div class="car-plate">

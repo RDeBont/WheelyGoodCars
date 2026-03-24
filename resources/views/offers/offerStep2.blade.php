@@ -2,8 +2,8 @@
 
     <div class="containerOffersIndex">
 
-        
-        <form method="POST" action="{{ route('offercar.store') }}" class="offer-form">
+
+        <form method="POST" action="{{ route('offercar.store') }}" class="offer-form" enctype="multipart/form-data">
             <h1>Nieuw aanbod</h1>
             @csrf
 
@@ -31,36 +31,43 @@
             <div class="form-row-3">
                 <div class="form-group">
                     <label for="seats">Aantal zitplaatsen</label>
-                    <input type="number" id="seats" name="seats" value="{{ $car_data['aantal_zitplaatsen'] ?? '' }}" readonly>
+                    <input type="number" id="seats" name="seats" value="{{ $car_data['aantal_zitplaatsen'] ?? '' }}"
+                        readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="doors">Aantal deuren</label>
-                    <input type="number" id="doors" name="doors" value="{{ $car_data['aantal_deuren'] ?? '' }}" readonly>
+                    <input type="number" id="doors" name="doors" value="{{ $car_data['aantal_deuren'] ?? '' }}"
+                        readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="mass_ready">Massa rijklaar</label>
-                    <input type="number" id="mass_ready" name="mass_ready" value="{{ $car_data['massa_rijklaar'] ?? '' }}" readonly>
+                    <input type="number" id="mass_ready" name="mass_ready"
+                        value="{{ $car_data['massa_rijklaar'] ?? '' }}" readonly>
                 </div>
             </div>
 
             <div class="form-row-2">
                 <div class="form-group">
                     <label for="year">Jaar van productie</label>
-                    <input type="number" id="year" name="year" value="{{ $car_data['datum_eerste_toelating'] ? substr($car_data['datum_eerste_toelating'], 0, 4) : '' }}" readonly>
+                    <input type="number" id="year" name="year"
+                        value="{{ $car_data['datum_eerste_toelating'] ? substr($car_data['datum_eerste_toelating'], 0, 4) : '' }}"
+                        readonly>
                 </div>
 
                 <div class="form-group">
                     <label for="color_primary">Kleur</label>
-                    <input type="text" id="color_primary" name="color_primary" value="{{ $car_data['eerste_kleur'] ?? '' }}" readonly>
+                    <input type="text" id="color_primary" name="color_primary"
+                        value="{{ $car_data['eerste_kleur'] ?? '' }}" readonly>
                 </div>
             </div>
 
             <div class="form-group full-width">
                 <label for="kilometers">Kilometerstand</label>
                 <div class="input-with-unit">
-                    <input type="number" id="kilometers" name="kilometers" placeholder="Voer kilometerstand in" required>
+                    <input type="number" id="kilometers" name="kilometers" placeholder="Voer kilometerstand in"
+                        required>
                     <span class="unit">km</span>
                 </div>
             </div>
@@ -78,7 +85,7 @@
                 <input type="file" id="img" name="img" accept="image/*">
                 <p class="form-text">Maximale grootte: 4MB. JPG, PNG of WEBP</p>
             </div>
-        
+
             <button type="submit" class="btn-submit">Tags toevoegen</button>
         </form>
     </div>
