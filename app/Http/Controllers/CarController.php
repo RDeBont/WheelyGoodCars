@@ -12,6 +12,12 @@ use Illuminate\View\View;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Models\Tag;
 use App\Models\Car_tag;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Models\Offer;
+
 
 class CarController extends Controller
 {
@@ -141,8 +147,6 @@ class CarController extends Controller
             'license_plate' => 'required|string',
             'kilometers' => 'required|numeric|min:0',
             'price' => 'required|numeric|min:0',
-            'tags' => 'array',
-            'tags.*' => 'exists:tags,id',
         ],[
             'license_plate.required' => 'Kenteken is verplicht.',
             'kilometers.required' => 'Kilometers zijn verplicht.',
@@ -151,8 +155,6 @@ class CarController extends Controller
             'price.required' => 'Prijs is verplicht.',
             'price.numeric' => 'Prijs moet een getal zijn.',
             'price.min' => 'Prijs moet minimaal 0 zijn.',
-            'tags.array' => 'Tags moeten een array zijn.',
-            'tags.*.exists' => 'Geselecteerde tag bestaat niet.',
         ]);
 
         $car_data = session('car_api_data');
@@ -175,23 +177,40 @@ class CarController extends Controller
             'color' => $car_data['eerste_kleur'] ?? null,
         ]);
 
-        $car_tag = Car_tag::insert(
-            collect($validated['tags'] ?? [])->map(function ($tag_id) use ($car) {
-                return [
-                    'car_id' => $car->id,
-                    'tag_id' => $tag_id,
-                ];
-            })->toArray()
-        );
-
-
         session()->forget('car_api_data');
-
-        return redirect()->route('index')->with('success', 'Auto aanbod succesvol aangemaakt!');
+        $tags = Tag::all();
+        $car = Car::where('license_plate', $validated['license_plate'])->first();
+        return redirect()->route('offercar.step3', ['car' => $car])->with('tags', $tags)->with('success', 'Auto aanbod succesvol Opgeslagen!');
     }
 
     
+    public function create_step4(Car $car)
+    {
+        
+        $tags = Tag::orderBy('name')->get();
+        return view('offers.offerStep3', compact('car', 'tags'));
+    }
 
+    public function store_tags(Request $request)
+    {
+        $validated = $request->validate([
+            'car_id' => 'required|exists:cars,id',
+            'tags' => 'required|array',
+            'tags.*' => 'exists:tags,id',
+        ],[
+            'car_id.required' => 'Er is een fout opgetreden bij het opslaan van de tags. Probeer het opnieuw.',
+            'car_id.exists' => 'De opgegeven auto bestaat niet.',
+            'tags.required' => 'Selecteer minimaal één tag, of klik op "Opslaan zonder tags".',
+            'tags.array' => 'Ongeldige tags-indeling.',
+            'tags.*.exists' => 'Een of meer geselecteerde tags bestaan niet.',
+        ]);
+
+        $car = Car::findOrFail($validated['car_id']);
+        $car->tags()->sync($validated['tags']);
+
+        return redirect()->route('owncars')->with('success', 'Auto en/of tags succesvol opgeslagen!');
+    }
+    
     /**
      * Display the specified resource.
      */

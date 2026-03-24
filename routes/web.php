@@ -15,7 +15,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/offers/addcar', [CarController::class, 'create_step1'])->name('offers.addcar');
     Route::get('/offers/addcar2/{license_plate}', [CarController::class, 'create_step2'])->name('offercar.step2');
     Route::post('/offers/store', [CarController::class, 'store'])->name('offercar.store');
+    // Step 3: review / select tags for a saved car
+    Route::get('/offers/addcar3/{car}', [CarController::class, 'create_step4'])->name('offercar.step3');
+    Route::post('/offers/store-tags', [CarController::class, 'store_tags'])->name('offercar.store_tags');
 
+    
     Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
     Route::get('/admin/dashboard/data', [AdminController::class, 'dashboardData'])->name('admin.dashboard.data');
 

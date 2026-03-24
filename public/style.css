@@ -251,8 +251,8 @@ header {
 }
 
 .btn-submit {
-    background-color: #f5f5f5;
-    color: #333;
+    background-color: #00671a;
+    color: #fff;
     padding: 12px 20px;
     border: 1px solid #999;
     border-radius: 4px;
@@ -266,7 +266,7 @@ header {
 }
 
 .btn-submit:hover {
-    background-color: #e8e8e8;
+    background-color: #009a27;
 }
 
 input:disabled,

@@ -72,19 +72,8 @@
                     <input type="number" id="price" name="price" placeholder="Voer verkoopprijs in" required>
                 </div>
             </div>
-            <div class="form-group full-width">
-                <label>Tags (optioneel)</label>
-                <div class="tags-container">
-                    @foreach($tags as $tag)
-                        <label class="tag-checkbox" style="background-color: {{ $tag->color }}; color: white;">
-                            <input type="checkbox" name="tags[]" value="{{ $tag->id }}">
-                            {{ $tag->name }}
-                        </label>
-                    @endforeach
-                </div>
-            </div>
         
-            <button type="submit" class="btn-submit">Aanbod afzenden</button>
+            <button type="submit" class="btn-submit">Tags toevoegen</button>
         </form>
     </div>
 
