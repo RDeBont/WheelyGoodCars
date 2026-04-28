@@ -56,6 +56,7 @@
                         <div class="car-list-right">
                             <livewire:car-status :car="$car" :key="$car->id" />
                             <div class="car-list-actions">
+                                <a href="{{ route('owncars.tags.edit', $car->id) }}" class="btn-edit" title="Tags bewerken">🏷️</a>
                                 <a href="{{ route('cars.pdf', $car->id) }}" class="btn-edit" title="Download PDF"
                                     target="_blank">📄</a>
                                 <form method="POST" action="{{ route('cars.destroy', $car->id) }}" style="display:inline;"

@@ -268,6 +268,41 @@ class CarController extends Controller
         //
     }
 
+    public function editTags(Car $car): View
+    {
+        if ($car->user_id !== auth()->id()) {
+            return redirect()->route('owncars')->withErrors([
+                'error' => 'Je hebt geen toestemming om deze tags te bewerken.'
+            ]);
+        }
+
+        $tags = Tag::orderBy('name')->get();
+        $selectedTagIds = $car->tags()->pluck('tags.id')->all();
+
+        return view('own.edit-tags', compact('car', 'tags', 'selectedTagIds'));
+    }
+
+    public function updateTags(Request $request, Car $car): RedirectResponse
+    {
+        if ($car->user_id !== auth()->id()) {
+            return back()->withErrors([
+                'error' => 'Je hebt geen toestemming om deze tags te bewerken.'
+            ]);
+        }
+
+        $validated = $request->validate([
+            'tags' => 'nullable|array',
+            'tags.*' => 'exists:tags,id',
+        ], [
+            'tags.array' => 'Ongeldige tags-indeling.',
+            'tags.*.exists' => 'Een of meer geselecteerde tags bestaan niet.',
+        ]);
+
+        $car->tags()->sync($validated['tags'] ?? []);
+
+        return redirect()->route('owncars')->with('success', 'Tags bijgewerkt!');
+    }
+
     /**
      * Remove the specified resource from storage.
      */

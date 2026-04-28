@@ -26,6 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/admin/dashboard/data', [AdminController::class, 'dashboardData'])->name('admin.dashboard.data');
 
 Route::get('/owncars', [CarController::class, 'owncars'])->name('owncars');
+Route::get('/owncars/{car}/tags', [CarController::class, 'editTags'])->name('owncars.tags.edit');
+Route::post('/owncars/{car}/tags', [CarController::class, 'updateTags'])->name('owncars.tags.update');
 Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
 Route::get('/cars/{car}/pdf', [CarController::class, 'exportPdf'])->middleware('auth')->name('cars.pdf');
 
