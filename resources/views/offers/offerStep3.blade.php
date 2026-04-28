@@ -1,9 +1,25 @@
 <x-base-layout>
 
     <div class="containerOffersIndex">
+        <div class="offer-step-stack">
+            <div class="offer-steps">
+                <div class="offer-step is-complete">
+                    <span class="offer-step-dot"></span>
+                    <span class="offer-step-label">Stap 1</span>
+                </div>
+                <span class="offer-step-line is-complete"></span>
+                <div class="offer-step is-complete">
+                    <span class="offer-step-dot"></span>
+                    <span class="offer-step-label">Stap 2</span>
+                </div>
+                <span class="offer-step-line is-complete"></span>
+                <div class="offer-step is-active">
+                    <span class="offer-step-dot"></span>
+                    <span class="offer-step-label">Stap 3</span>
+                </div>
+            </div>
 
-
-        <form method="POST" action="{{ route('offercar.store_tags') }}" class="offer-form">
+            <form method="POST" action="{{ route('offercar.store_tags') }}" class="offer-form">
             <h1>Nieuw aanbod</h1>
             @csrf
             <div class="form-group">
@@ -47,7 +63,8 @@
                 <button type="submit" class="btn-submit">Aanbod afzenden</button>
 
             </div>
-        </form>
+            </form>
+        </div>
     </div>
 
 </x-base-layout>

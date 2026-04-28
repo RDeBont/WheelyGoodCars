@@ -1,11 +1,27 @@
 <x-base-layout>
 
     <div class="containerOffersIndex">
+        <div class="offer-step-stack">
+            <div class="offer-steps">
+                <div class="offer-step is-complete">
+                    <span class="offer-step-dot"></span>
+                    <span class="offer-step-label">Stap 1</span>
+                </div>
+                <span class="offer-step-line is-complete"></span>
+                <div class="offer-step is-active">
+                    <span class="offer-step-dot"></span>
+                    <span class="offer-step-label">Stap 2</span>
+                </div>
+                <span class="offer-step-line"></span>
+                <div class="offer-step">
+                    <span class="offer-step-dot"></span>
+                    <span class="offer-step-label">Stap 3</span>
+                </div>
+            </div>
 
-
-        <form method="POST" action="{{ route('offercar.store') }}" class="offer-form" enctype="multipart/form-data">
-            <h1>Nieuw aanbod</h1>
-            @csrf
+            <form method="POST" action="{{ route('offercar.store') }}" class="offer-form" enctype="multipart/form-data">
+                <h1>Nieuw aanbod</h1>
+                @csrf
 
             <div class="form-group">
                 <div class="car-plate">
@@ -86,8 +102,9 @@
                 <p class="form-text">Maximale grootte: 4MB. JPG, PNG of WEBP</p>
             </div>
 
-            <button type="submit" class="btn-submit">Tags toevoegen</button>
-        </form>
+                <button type="submit" class="btn-submit">Tags toevoegen</button>
+            </form>
+        </div>
     </div>
 
 </x-base-layout>

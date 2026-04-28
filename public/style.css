@@ -95,6 +95,15 @@ header {
     min-height: 90vh;
 }
 
+.offer-step-stack {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 24px;
+}
+
 
 .bar {
     display: flex;
@@ -105,6 +114,61 @@ header {
     overflow: hidden;
     margin: 2rem auto;
 
+}
+
+
+.offer-steps {
+    max-width: 900px;
+    margin: 0 auto 20px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.offer-step {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-direction: column;
+    font-size: 13px;
+    font-weight: 600;
+    color: #6b7280;
+}
+
+.offer-step-label {
+    font-size: 12px;
+    letter-spacing: 0.02em;
+}
+
+.offer-step-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid #cbd5f5;
+    background: #ffffff;
+    display: inline-block;
+}
+
+.offer-step-line {
+    flex: 1;
+    height: 2px;
+    background: #e5e7eb;
+}
+
+.offer-step.is-active,
+.offer-step.is-complete {
+    color: #2563eb;
+}
+
+.offer-step.is-active .offer-step-dot,
+.offer-step.is-complete .offer-step-dot {
+    border-color: #2563eb;
+    background: #2563eb;
+}
+
+.offer-step-line.is-complete {
+    background: #2563eb;
 }
 
 .left {
