@@ -323,19 +323,21 @@ input[readonly] {
 }
 
 .cars-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-    justify-content: center;
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-auto-flow: dense;
+    align-items: stretch;
 }
 
 .car-card {
-    flex: 0 1 calc(25% - 15px);
     border: 1px solid #ddd;
     border-radius: 8px;
     overflow: hidden;
     background: white;
-    transition: box-shadow 0.3s;
+    transition: box-shadow 0.3s, transform 0.3s;
+    display: flex;
+    flex-direction: column;
 }
 
 .card-link {
@@ -350,6 +352,13 @@ input[readonly] {
 
 .car-card:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-3px);
+}
+
+.car-card--featured {
+    grid-column: span 2;
+    grid-row: span 2;
+    border: 2px solid #111827;
 }
 
 .car-image {
@@ -357,6 +366,21 @@ input[readonly] {
     height: 200px;
     overflow: hidden;
     background: #f0f0f0;
+}
+
+.car-card--featured .car-image {
+    height: 300px;
+}
+
+@media (max-width: 900px) {
+    .car-card--featured {
+        grid-column: span 1;
+        grid-row: span 1;
+    }
+
+    .car-card--featured .car-image {
+        height: 220px;
+    }
 }
 
 .car-image img {

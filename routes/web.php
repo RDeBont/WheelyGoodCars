@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\AdminController;
 Route::get('/', [CarController::class, 'index'])->name('index');
+Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.show');
 
 // Alleen index is openbaar, alles eronder vereist auth
 Route::middleware('auth')->group(function () {
@@ -16,6 +17,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/offers/addcar2/{license_plate}', [CarController::class, 'create_step2'])->name('offercar.step2');
     Route::post('/offers/store', [CarController::class, 'store'])->name('offercar.store');
     // Step 3: review / select tags for a saved car
+
     Route::get('/offers/addcar3/{car}', [CarController::class, 'create_step4'])->name('offercar.step3');
     Route::post('/offers/store-tags', [CarController::class, 'store_tags'])->name('offercar.store_tags');
 
@@ -26,7 +28,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/owncars', [CarController::class, 'owncars'])->name('owncars');
 Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
 Route::get('/cars/{car}/pdf', [CarController::class, 'exportPdf'])->middleware('auth')->name('cars.pdf');
-Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.show');
 
 Route::get('/dashboard', function () {
     return redirect()->route('index'); 

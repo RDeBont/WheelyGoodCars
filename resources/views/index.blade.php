@@ -2,9 +2,14 @@
     <div class="home-container">
         <h1>Beschikbare auto's</h1>
 
+        @php
+            $featuredCount = max(1, (int) ceil($cars->count() / 6));
+            $featuredIds = $cars->pluck('id')->shuffle()->take($featuredCount)->all();
+        @endphp
+
         <div class="cars-row">
             @foreach($cars as $car)
-                <a href="{{ route('cars.show', $car->id) }}" class="car-card card-link">
+                <a href="{{ route('cars.show', $car->id) }}" class="car-card card-link{{ in_array($car->id, $featuredIds) ? ' car-card--featured' : '' }}">
                     <div class="car-image">
                         <img src="{{ asset($car->image) ?? asset('images/default-car.png') }}" alt="{{ $car->make }} {{ $car->model }}">
                     </div>
@@ -30,7 +35,4 @@
 
     
     </div>
-
-
-    </style>
 </x-base-layout>

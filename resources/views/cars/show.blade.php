@@ -75,4 +75,39 @@
 
     </div>
 </div>
+@php
+    $viewCount = $car->views ?? 10;
+@endphp
+
+<!-- TOAST -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="car-views-toast"
+         class="toast"
+         role="status"
+         aria-live="polite"
+         aria-atomic="true"
+        data-bs-autohide="false">
+        <div class="toast-header">
+            <strong class="me-auto">Populair vandaag</strong>
+            <small>Aantal keer bekken</small>
+            <button type="button" class="btn-close" data-bs-dismiss="toast"></button>
+        </div>
+
+        <div class="toast-body">
+            {{ $viewCount }} klanten bekeken deze auto vandaag
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+        const toastEl = document.getElementById('car-views-toast');
+        if (!toastEl) return;
+
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+    }, 10000); // 10 seconden delay
+});
+</script>
 </x-base-layout>
