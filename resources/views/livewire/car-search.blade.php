@@ -9,8 +9,23 @@
         <span class="cars-search-hint">{{ $cars->total() }} resultaten</span>
     </div>
 
+    <div class="cars-filter-tags">
+        <span class="cars-filter-label">Filter op tags:</span>
+        @foreach($tags as $tag)
+            <label class="cars-tag-chip" style="border-color: {{ $tag->color }};">
+                <input
+                    type="checkbox"
+                    value="{{ $tag->id }}"
+                    wire:model.live="selectedTags"
+                >
+                <span class="cars-tag-dot" style="background-color: {{ $tag->color }};"></span>
+                <span>{{ $tag->name }}</span>
+            </label>
+        @endforeach
+    </div>
+
     @if($cars->isEmpty())
-        <div class="cars-empty">Geen auto's gevonden voor deze zoekterm.</div>
+        <div class="cars-empty">Geen auto's gevonden voor deze zoekterm of filters.</div>
     @else
         <div class="cars-row">
             @foreach($cars as $car)

@@ -343,6 +343,69 @@ input[readonly] {
     font-size: 13px;
 }
 
+.cars-filter-tags {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.cars-filter-label {
+    font-size: 13px;
+    color: #6b7280;
+    font-weight: 600;
+}
+
+.cars-tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 999px;
+    border: 1px solid #d1d5db;
+    background: #ffffff;
+    font-size: 12px;
+    color: #111827;
+    cursor: pointer;
+    user-select: none;
+}
+
+.cars-tag-chip input {
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 4px;
+    border: 1px solid #9ca3af;
+    display: inline-block;
+    position: relative;
+    background: #ffffff;
+}
+
+.cars-tag-chip input:checked {
+    border-color: #111827;
+    background: #111827;
+}
+
+.cars-tag-chip input:checked::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 4px;
+    width: 4px;
+    height: 7px;
+    border-right: 2px solid #ffffff;
+    border-bottom: 2px solid #ffffff;
+    transform: rotate(45deg);
+}
+
+.cars-tag-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+}
+
 .cars-empty {
     padding: 20px 0;
     color: #6b7280;
