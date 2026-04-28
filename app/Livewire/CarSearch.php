@@ -4,10 +4,20 @@ namespace App\Livewire;
 
 use App\Models\Car;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class CarSearch extends Component
 {
+    use WithPagination;
+
     public string $search = '';
+
+    protected string $paginationTheme = 'bootstrap';
+
+    public function updatedSearch(): void
+    {
+        $this->resetPage();
+    }
 
     public function render()
     {
@@ -21,9 +31,9 @@ class CarSearch extends Component
             });
         }
 
-        $cars = $query->get();
+        $cars = $query->paginate(13);
         $featuredCount = max(1, (int) ceil($cars->count() / 6));
-        $featuredIds = $cars->pluck('id')->shuffle()->take($featuredCount)->all();
+        $featuredIds = $cars->getCollection()->pluck('id')->shuffle()->take($featuredCount)->all();
 
         return view('livewire.car-search', [
             'cars' => $cars,

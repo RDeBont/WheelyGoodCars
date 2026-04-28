@@ -348,6 +348,14 @@ input[readonly] {
     color: #6b7280;
 }
 
+.cars-pagination {
+    margin: 22px 0 10px;
+}
+
+.cars-pagination .pagination {
+    justify-content: center;
+}
+
 .cars-row {
     display: grid;
     gap: 22px;

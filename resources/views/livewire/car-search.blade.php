@@ -6,7 +6,7 @@
             placeholder="Zoek op merk of model..."
             wire:model.live.debounce.300ms="search"
         >
-        <span class="cars-search-hint">{{ $cars->count() }} resultaten</span>
+        <span class="cars-search-hint">{{ $cars->total() }} resultaten</span>
     </div>
 
     @if($cars->isEmpty())
@@ -36,6 +36,9 @@
                     </div>
                 </a>
             @endforeach
+        </div>
+        <div class="cars-pagination">
+            {{ $cars->links() }}
         </div>
     @endif
 </div>
