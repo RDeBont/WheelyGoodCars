@@ -7,6 +7,7 @@
     <title>Wheely Good Cars</title>
     <link rel="stylesheet" href="{{ asset('style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    @livewireStyles
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
@@ -23,8 +24,8 @@
 
     <footer>
     </footer>
-</body>
-<script>
+    @livewireScripts
+    <script>
 
     setTimeout(function () {
         const bubble = document.getElementById('alert-bubble');
@@ -33,7 +34,8 @@
             setTimeout(() => bubble.remove(), 500);
         }
     }, 5000);
-</script>
+    </script>
+</body>
 
 
 </html>

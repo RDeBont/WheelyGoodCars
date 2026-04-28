@@ -322,6 +322,32 @@ input[readonly] {
     color: #333;
 }
 
+.cars-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.cars-search-input {
+    width: 100%;
+    max-width: 420px;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 14px;
+}
+
+.cars-search-hint {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.cars-empty {
+    padding: 20px 0;
+    color: #6b7280;
+}
+
 .cars-row {
     display: grid;
     gap: 22px;
